@@ -1,6 +1,16 @@
 import { supabase } from './supabase';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
+// const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
+
+const rawApiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+
+if (!rawApiBaseUrl) {
+  throw new Error(
+    'Missing VITE_API_BASE_URL. Set it in Vercel to your Railway backend URL and redeploy.'
+  );
+}
+
+const API_BASE_URL = rawApiBaseUrl.replace(/\/$/, '');
 
 type RequestOptions = RequestInit & { isFormData?: boolean };
 
